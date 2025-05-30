@@ -1,4 +1,5 @@
 use clap::{Parser, Subcommand};
+mod config;
 
 #[derive(Parser)]
 #[command(name = "notebot")]
@@ -14,10 +15,12 @@ enum Commands {
     Task,
 }
 
-fn main() {
+fn main() -> anyhow::Result<()> {
+    config::init_storage()?;
     let cli = Cli::parse();
     match cli.command {
         Some(Commands::Task) => println!("Task command placeholder"),
         None => println!("No command provided"),
     }
+    Ok(())
 }
